@@ -1,7 +1,7 @@
 ################################################################################
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(dynamixel_sdk_examples)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -51,6 +51,7 @@ catkin_package(
     roscpp
     std_msgs
     dynamixel_sdk
+    message_runtime
 #  DEPENDS system_lib
 )
 
@@ -62,6 +63,16 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+
+
+
+add_executable(motor_controller src/motor_controller.cpp)
+add_dependencies(motor_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(motor_controller ${catkin_LIBRARIES})
+
+
+
 
 add_executable(read_write_node src/read_write_node.cpp)
 add_dependencies(read_write_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -78,6 +89,10 @@ target_link_libraries(bulk_read_write_node ${catkin_LIBRARIES})
 add_executable(indirect_address_node src/indirect_address_node.cpp)
 add_dependencies(indirect_address_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(indirect_address_node ${catkin_LIBRARIES})
+
+#add_executable(motor_publisher src/motor_controller.cpp)
+#add_dependencies(motor_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(motor_publisher ${catkin_LIBRARIES})
 
 ################################################################################
 # Install
